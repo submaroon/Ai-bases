@@ -773,67 +773,7 @@
         <li>Llama 2 (70B): 8,192-мерные эмбеддинги</li>
     </ul>
 
-    <div class="code-block">
-        <div class="code-block-header">Python: Визуализация токенизации текста с помощью tiktoken (токенизатор OpenAI)</div>
-<pre><code class="language-python">import tiktoken
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.colors import LinearSegmentedColormap
-
-# Функция для токенизации текста и визуализации
-def visualize_tokenization(text, model="cl100k_base"):
-    # Загрузка токенизатора
-    tokenizer = tiktoken.get_encoding(model)
-    
-    # Токенизация текста
-    tokens = tokenizer.encode(text)
-    
-    # Декодирование каждого токена обратно в текст
-    token_texts = [tokenizer.decode([token]) for token in tokens]
-    
-    # Создание цветовой карты
-    colors = ["#4f46e5", "#8b5cf6", "#ec4899", "#f43f5e", "#f97316", "#eab308"]
-    cmap = LinearSegmentedColormap.from_list("custom_cmap", colors, N=256)
-    
-    # Создание визуализации
-    fig, ax = plt.subplots(figsize=(14, len(token_texts) * 0.4 + 2))
-    
-    # Отображение токенов
-    for i, token_text in enumerate(token_texts):
-        color = cmap(i / len(token_texts))
-        ax.barh(i, 1, color=color, alpha=0.7)
-        ax.text(0.5, i, f"{token_text} ({tokens[i]})", 
-                ha='center', va='center', fontsize=10, 
-                bbox=dict(facecolor='white', alpha=0.7, boxstyle='round,pad=0.2'))
-    
-    # Настройка графика
-    ax.set_yticks([])
-    ax.set_xticks([])
-    ax.set_xlim(0, 1)
-    ax.set_ylim(-1, len(token_texts))
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    ax.spines['bottom'].set_visible(False)
-    ax.spines['left'].set_visible(False)
-    
-    plt.title(f"Токенизация текста с помощью {model}", fontsize=14)
-    plt.tight_layout()
-    plt.savefig('tokenization_example.png', dpi=300, bbox_inches='tight')
-    plt.show()
-    
-    return tokens, token_texts
-
-# Пример использования
-text = "Нейронные сети трансформеры используют механизм самовнимания (self-attention) для обработки последовательностей."
-tokens, token_texts = visualize_tokenization(text)
-
-# Вывод информации о токенизации
-print(f"Исходный текст: {text}")
-print(f"Количество токенов: {len(tokens)}")
-print(f"Токены: {tokens}")
-print(f"Текстовое представление токенов: {token_texts}")
-</code></pre>
-    </div>
+<img src="images/tokenization_example.png" alt="" width="100%" height="auto" class="img-responsive">
 
     <h3>Особенности и проблемы токенизации</h3>
     <p>
